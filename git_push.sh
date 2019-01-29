@@ -13,9 +13,6 @@ commit_website_files() {
   git add gcr-complete-images gcr-complete-tasks
   git status
   git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
-}
-
-upload_files() {
   REMOTE_REF="tasks"
   [ -n "`git remote | grep $REMOTE_REF`" ] && git remote remove ${REMOTE_REF}
   git remote add ${REMOTE_REF} https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
@@ -24,5 +21,5 @@ upload_files() {
 }
 
 setup_git
-commit_website_files
+#commit_website_files
 upload_files
