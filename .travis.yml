@@ -33,5 +33,5 @@ before_install:
 - gcloud version
 # Insert your own install + script below.
 install: true
-script: true
+script: sh gcr.sh 
 
