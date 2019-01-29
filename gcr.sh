@@ -8,7 +8,7 @@ gcloud container images list --repository gcr.io/google_containers | awk 'NR>2{p
 #docker search gcr.io/google_containers/ | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 name="googlecontainer"
-[ ! -d "/etc/gcr" ] && mkdir -p /etc/gcr
+#[ ! -d "/etc/gcr" ] && mkdir -p /etc/gcr
 stored_file_list="gcr-complete-tasks"
 stored_image_list="gcr-complete-images"
 [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}

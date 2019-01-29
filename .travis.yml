@@ -21,7 +21,7 @@ before_install:
   # This line is critical. We setup the SDK to take precedence in our
   # environment over the old SDK that is already on the machine.
   - source $HOME/google-cloud-sdk/path.bash.inc
-  - gcloud components update kubectl
+  #- gcloud components update kubectl
   - gcloud version
 # Insert your own install + script below.
 install:
