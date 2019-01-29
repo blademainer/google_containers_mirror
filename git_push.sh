@@ -14,10 +14,11 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote remove tasks && git remote add tasks https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
+  REMOTE_REF="tasks"
+  [[ -n "`git remote | grep $REMOTE_REF`" ]] && git remote remove ${REMOTE_REF}
+  git remote add ${REMOTE_REF} https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
 #  git push --quiet --set-upstream tasks master
-  git push --set-upstream tasks master
-
+  git push --set-upstream ${REMOTE_REF} master
 }
 
 setup_git
