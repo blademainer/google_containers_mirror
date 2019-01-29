@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 setup_git() {
   git config --global user.email "travis@travis-ci.org"
@@ -13,8 +13,8 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote add origin https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git > /dev/null 2>&1
-  git push --quiet --set-upstream origin master
+  git remote add tasks https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git > /dev/null 2>&1
+  git push --quiet --set-upstream tasks master
 }
 
 setup_git
