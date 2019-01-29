@@ -33,6 +33,7 @@ cat  gcr-list.tmp | while read repo; do
       echo "ignored push: ${push_url}"
     fi
     #docker rmi ${push_url}
+    sh git_push.sh
   done;
   wait;
   #[ -n "`docker images -q`" ] && docker rmi -f $(docker images -q)

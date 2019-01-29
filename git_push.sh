@@ -7,7 +7,8 @@ setup_git() {
 
 commit_website_files() {
 #  git checkout -b gh-pages
-  git add ./ -A
+#  git add ./ -A
+  git add gcr-complete-tasks gcr-complete-images
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
