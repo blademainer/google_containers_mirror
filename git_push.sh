@@ -10,6 +10,7 @@ commit_website_files() {
 #  git add ./ -A
   git status
   git add gcr-complete-images gcr-complete-tasks
+  git status
   git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
