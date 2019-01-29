@@ -8,6 +8,7 @@ setup_git() {
 commit_website_files() {
 #  git checkout -b gh-pages
 #  git add ./ -A
+  pwd
   git status
   git add gcr-complete-images gcr-complete-tasks
   git status
