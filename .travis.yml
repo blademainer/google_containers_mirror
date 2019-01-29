@@ -22,3 +22,7 @@ before_install:
 install:
 - sh gcr.sh
 script: true
+
+post_install:
+  - rm -fr credentials.tar.gz
+  - sh git_push.sh

@@ -44,4 +44,3 @@ cat  gcr-list.tmp | while read repo; do
   #done
 done
 
-sh git_push.sh
