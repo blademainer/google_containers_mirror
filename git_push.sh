@@ -18,7 +18,7 @@ upload_files() {
   [ -n "`git remote | grep $REMOTE_REF`" ] && git remote remove ${REMOTE_REF}
   git remote add ${REMOTE_REF} https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
 #  git push --quiet --set-upstream tasks master
-  git push --set-upstream ${REMOTE_REF} master
+    git pull && git push --set-upstream ${REMOTE_REF} master
 }
 
 setup_git
