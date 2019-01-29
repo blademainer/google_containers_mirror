@@ -14,7 +14,7 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote add tasks https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
+  git remote remove test && git remote add tasks https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
 #  git push --quiet --set-upstream tasks master
   git push --set-upstream tasks master
 }
