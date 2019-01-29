@@ -18,7 +18,7 @@ before_install:
 - gcloud version
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
-- gcloud auth activate-service-account --key-file client-secret.json && rm -fr credentials.tar.gz
+- gcloud auth activate-service-account --key-file client-secret.json && rm -fr credentials.tar.gz client-secret.json api_key.py
 install:
 - sh gcr.sh
 script: true
