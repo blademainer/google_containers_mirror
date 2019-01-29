@@ -9,7 +9,7 @@ commit_website_files() {
 #  git checkout -b gh-pages
 #  git add ./ -A
   git status
-  git add gcr-complete-images gcr-complete-images && git add ./ -A
+  git add gcr-complete-images gcr-complete-images
   git commit -a --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
