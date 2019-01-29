@@ -4,12 +4,10 @@
 # get an updated version of the SDK + kubectl.
 cache:
   directories:
-  # We cache the SDK so we don't have to download it again on subsequent builds.
   - $HOME/google-cloud-sdk
 services:
-# Include the docker service so you can roll your own images.
-# You can remove this if you already have images somewhere else.
 - docker
+
 env:
   global:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -18,20 +16,21 @@ env:
   - secure: YQcc4HFwBjMZns+zoOVLztXPLe01zRyLteMNV/Fo3PNP8MSN+qWobmdweyDtUfAUINZDyZN1K8N6ABULnC0jABSGoRmB7cRtQ5KcL2Eu5hMSTzMAKAe+QeRyYPYN9lNdtMtAJuWPK+ysMkhVRSkFWyvjm8eQF21Xnl1AjamjthT8QM46pr97UiKMijnlCrnMCloPnYs0WOjdyM3Xv06oGPJOmN0TdMyn2XtUQkK5kxEVDNHGluBk+eU2dwJi49nmJNhqk2mySr1lsKZUd6LrtBoBIlSB5tM8xggGvtSlB10tF8TT3k0YrIzpwmTkMHjz5S9IOIuPkYmoiedKj+JLnX0FjrkleGL6J/xi51aHbrmn+iFZMXhcYmlupoGWyb94xueX2SXH3EcRymoOHmGqWp70OG/cXDCueF7+HFytCmPlqQ3jtQCRaIcQkEeHRKDPiA/O/k8mHnun7zTdswdAGGPWqqzVLLBaIleIXlZLRslwzw3xCGQ0FAK0tnMmQrISwMLqnFfxwrJgGyj3X0Ia/5PocU2GFJPGYSoaafW4dCASCo0PziD1NG0C+zSrhgsSa/eBKMWid9GIQb1HWY5y2tuBNKV339NrGlmNbR3O1adQbs77G/zQV0MSp3lAdsd13p8W6fHOEJIYIzqggMU3k2lsp8TcvHEaeK3JetiGBqM=
 
 before_install:
-- if [ ! -d $HOME/google-cloud-sdk/bin ]; then
-  # The install script errors if this directory already exists,
-  # but Travis already creates it when we mark it as cached.
-  rm -rf $HOME/google-cloud-sdk;
-  # The install script is overly verbose, which sometimes causes
-  # problems on Travis, so ignore stdout.
-  curl https://sdk.cloud.google.com | bash > /dev/null;
-  fi
-# This line is critical. We setup the SDK to take precedence in our
-# environment over the old SDK that is already on the machine.
-- source $HOME/google-cloud-sdk/path.bash.inc
-- gcloud components update kubectl
-- gcloud version
+  - if [ ! -d $HOME/google-cloud-sdk/bin ]; then
+    # The install script errors if this directory already exists,
+    # but Travis already creates it when we mark it as cached.
+    rm -rf $HOME/google-cloud-sdk;
+    # The install script is overly verbose, which sometimes causes
+    # problems on Travis, so ignore stdout.
+    curl https://sdk.cloud.google.com | bash > /dev/null;
+    fi
+  # This line is critical. We setup the SDK to take precedence in our
+  # environment over the old SDK that is already on the machine.
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud version
 # Insert your own install + script below.
-install: true
-script: sh gcr.sh 
+install:
+  - sh gcr.sh
+script: true
 
