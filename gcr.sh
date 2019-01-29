@@ -24,7 +24,7 @@ cat  gcr-list.tmp | while read repo; do
     push_url="${name}/${repo_name}:${tag}"
     if [ -z "`cat ${stored_file_list} | grep ^${push_url}$`" ]; then
       if [ -z "`cat ${stored_image_list} | grep ^${image}$`" ]; then
-        docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url} &
+        docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
         echo "${push_url}" >> $stored_file_list
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
