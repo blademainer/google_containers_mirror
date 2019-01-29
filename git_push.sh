@@ -5,7 +5,7 @@ setup_git() {
   git config --global user.name "Travis CI"
 }
 
-commit_website_files() {
+upload_files() {
 #  git checkout -b gh-pages
 #  git add ./ -A
   pwd
