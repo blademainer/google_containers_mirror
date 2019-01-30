@@ -34,7 +34,7 @@ cat  gcr-list.tmp | while read repo; do
         echo "${push_url}" >> $stored_file_list
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
-        sh git_push.sh
+        time sh git_push.sh
         index=$((index+1))
         echo "index: $index"
         if [ ${index} -gt ${maxCount} ]; then
