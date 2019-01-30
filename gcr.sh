@@ -1,5 +1,5 @@
 #!/bin/bash
-maxCount=200
+maxCount=100
 incr(){
     echo "1" >> counter.tmp
 }
