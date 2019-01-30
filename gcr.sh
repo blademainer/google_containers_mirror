@@ -9,8 +9,11 @@ gcloud container images list --repository gcr.io/google_containers | awk 'NR>2{p
 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 name="googlecontainer"
 #[ ! -d "/etc/gcr" ] && mkdir -p /etc/gcr
-stored_file_list="gcr-complete-tasks"
-stored_image_list="gcr-complete-images"
+stored_file_list="google_containers_mirror_completed_list/gcr-complete-tasks"
+stored_image_list="google_containers_mirror_completed_list/gcr-complete-images"
+stored_repo="https://github.com/blademainer/google_containers_mirror_completed_list.git"
+git clone "${stored_repo}"
+
 [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}
 [ ! -f "${stored_image_list}" ] && touch ${stored_image_list}
 cat  gcr-list.tmp | while read repo; do

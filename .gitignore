@@ -5,3 +5,4 @@
 client-secret.json
 api_key.py
 *.json
+google_containers_mirror_completed_list

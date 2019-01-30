@@ -1,5 +1,5 @@
 #!/bin/bash
-
+dir=`pwd`
 setup_git() {
   git config user.email "travis@travis-ci.org"
   git config user.name "TravisCI"
@@ -10,10 +10,10 @@ upload_files() {
 #  git add ./ -A
   pwd
   git status
-  git add gcr-complete-images gcr-complete-tasks
+  git add ./
   git status
   git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
-  REPO="https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git"
+  REPO="https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror_completed_list.git"
 #  REMOTE_REF="tasks"
 #  [ -n "`git remote | grep $REMOTE_REF`" ] && git remote remove ${REMOTE_REF}
 #  git remote add ${REMOTE_REF} https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror.git
@@ -23,6 +23,9 @@ upload_files() {
   git push "$REPO" master
 }
 
+cd google_containers_mirror_completed_list
 setup_git
 #commit_website_files
 upload_files
+
+cd "$dir"
