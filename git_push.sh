@@ -11,7 +11,6 @@ upload_files() {
   pwd
   git status
   git add ./
-  git status
   git commit -m "Travis build: $TRAVIS_BUILD_NUMBER"
   REPO="https://${GH_TOKEN}@github.com/blademainer/google_containers_mirror_completed_list.git"
 #  REMOTE_REF="tasks"

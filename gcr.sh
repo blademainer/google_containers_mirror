@@ -1,5 +1,5 @@
 #!/bin/bash
-maxCount=200
+maxCount=100
 index=1
 
 ! which gcloud 2>/dev/null && echo "please install cloud first! see: https://cloud.google.com/sdk/downloads" && exit -1
@@ -15,7 +15,7 @@ name="googlecontainer"
 stored_file_list="google_containers_mirror_completed_list/gcr-complete-tasks"
 stored_image_list="google_containers_mirror_completed_list/gcr-complete-images"
 stored_repo="https://github.com/blademainer/google_containers_mirror_completed_list.git"
-git clone "${stored_repo}"
+git clone --depth 1 "${stored_repo}"
 
 [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}
 [ ! -f "${stored_image_list}" ] && touch ${stored_image_list}
@@ -34,19 +34,21 @@ cat  gcr-list.tmp | while read repo; do
         echo "${push_url}" >> $stored_file_list
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
-
+        time sh git_push.sh
         index=$((index+1))
+        echo "index: $index"
         if [ ${index} -gt ${maxCount} ]; then
           echo "greater max size: $maxCount";
-          break 2;
+          exit 0
         fi
       fi
     else
       echo "ignored push: ${push_url}"
     fi
     #docker rmi ${push_url}
+
   done;
-  sh git_push.sh
+
   #[ -n "`docker images -q`" ] && docker rmi -f $(docker images -q)
   #docker images > images.tmp
   #_i=`cat images.tmp |  awk -F "[ ]+" 'NR=1{for(i=1;i<=NF;i++){if($i=="IMAGE"){print i}}}'`
@@ -55,5 +57,5 @@ cat  gcr-list.tmp | while read repo; do
   #  docker rmi -f $image_id
   #done
 done
-sh git_push.sh
+time sh git_push.sh
 
