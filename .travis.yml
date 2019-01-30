@@ -21,8 +21,8 @@ before_install:
 - mkdir -p lib
 - gcloud auth activate-service-account --key-file client-secret.json && rm -fr credentials.tar.gz
   client-secret.json api_key.py
-install:
-- sh gcr.sh
+#install:
+#- sh gcr.sh
 script: true
 post_install:
 - sh git_push.sh
