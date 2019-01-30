@@ -57,5 +57,5 @@ cat  gcr-list.tmp | while read repo; do
   #  docker rmi -f $image_id
   #done
 done
-
+time sh git_push.sh
 
