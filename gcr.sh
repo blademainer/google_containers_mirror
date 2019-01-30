@@ -36,6 +36,7 @@ cat  gcr-list.tmp | while read repo; do
         echo "pushed: ${push_url} image: ${image}"
 
         index=$((index+1))
+        echo "index: $index"
         if [ ${index} -gt ${maxCount} ]; then
           echo "greater max size: $maxCount";
           break 2;
