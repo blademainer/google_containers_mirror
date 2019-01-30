@@ -1,5 +1,5 @@
 #!/bin/bash
-maxCount=200
+maxCount=100
 index=1
 
 ! which gcloud 2>/dev/null && echo "please install cloud first! see: https://cloud.google.com/sdk/downloads" && exit -1
