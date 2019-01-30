@@ -1,4 +1,7 @@
 #!/bin/bash
+maxCount=200
+index=1
+
 ! which gcloud 2>/dev/null && echo "please install cloud first! see: https://cloud.google.com/sdk/downloads" && exit -1
 rm -f gcr-list.tmp
 # gcloud container images list --repository gcr.io/google_containers
@@ -31,14 +34,19 @@ cat  gcr-list.tmp | while read repo; do
         echo "${push_url}" >> $stored_file_list
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
+
+        index=$((index+1))
+        if [ ${index} -gt ${maxCount} ]; then
+          echo "greater max size: $maxCount";
+          break 2;
+        fi
       fi
     else
       echo "ignored push: ${push_url}"
     fi
     #docker rmi ${push_url}
-    sh git_push.sh
   done;
-  wait;
+  sh git_push.sh
   #[ -n "`docker images -q`" ] && docker rmi -f $(docker images -q)
   #docker images > images.tmp
   #_i=`cat images.tmp |  awk -F "[ ]+" 'NR=1{for(i=1;i<=NF;i++){if($i=="IMAGE"){print i}}}'`
@@ -47,4 +55,5 @@ cat  gcr-list.tmp | while read repo; do
   #  docker rmi -f $image_id
   #done
 done
+sh git_push.sh
 
