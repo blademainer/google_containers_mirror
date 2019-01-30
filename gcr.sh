@@ -1,14 +1,14 @@
 #!/bin/bash
 maxCount=100
-function incr(){
+incr(){
     echo "1" >> counter.tmp
 }
 
-function count(){
+count(){
     cat counter.tmp | wc -l
 }
 
-function clean(){
+clean(){
     rm -fr counter.tmp
 }
 
