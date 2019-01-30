@@ -1,16 +1,20 @@
 #!/bin/bash
 
-index=1
+function incr(){
+    echo "1" >> counter.tmp
+}
+
+function reached(){
+    cat counter.tmp | wc -l
+}
+
 maxCount=10
 cat git_push.sh | while read f; do
-  cat git_push.sh | while read g; do
-  index=$((index+1))
-  echo "$index======$g";
-  if [ $index -gt $maxCount ]; then
-    echo "greater max size: $index";
-    break 2;
-  fi
+  cat gcr.sh | while read g; do
+      incr
+      [ $(reached) -gt $maxCount ] && echo "inner reach max: 10" && break 2
   done
+  [ $(reached) -gt $maxCount ] && echo "out reach max: 10" && break
 done
 echo "done."
 

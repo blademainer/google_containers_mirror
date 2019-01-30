@@ -1,6 +1,17 @@
 #!/bin/bash
 maxCount=100
-index=1
+function incr(){
+    echo "1" >> counter.tmp
+}
+
+function count(){
+    cat counter.tmp | wc -l
+}
+
+function clean(){
+    rm -fr counter.tmp
+}
+
 
 ! which gcloud 2>/dev/null && echo "please install cloud first! see: https://cloud.google.com/sdk/downloads" && exit -1
 rm -f gcr-list.tmp
@@ -37,10 +48,7 @@ cat  gcr-list.tmp | while read repo; do
         time sh git_push.sh
         index=$((index+1))
         echo "index: $index"
-        if [ ${index} -gt ${maxCount} ]; then
-          echo "greater max size: $maxCount";
-          break 2;
-        fi
+        [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
       fi
     else
       echo "ignored push: ${push_url}"
@@ -56,6 +64,7 @@ cat  gcr-list.tmp | while read repo; do
   #  echo "removing: ${image_id}"
   #  docker rmi -f $image_id
   #done
+  [ $(count) -gt $maxCount ] && echo "out reach max: $maxCount" && break
 done
 time sh git_push.sh
 
