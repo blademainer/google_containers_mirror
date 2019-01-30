@@ -39,7 +39,7 @@ cat  gcr-list.tmp | while read repo; do
         echo "index: $index"
         if [ ${index} -gt ${maxCount} ]; then
           echo "greater max size: $maxCount";
-          exit 0
+          break 2;
         fi
       fi
     else
