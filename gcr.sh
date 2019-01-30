@@ -45,8 +45,9 @@ cat  gcr-list.tmp | while read repo; do
       echo "ignored push: ${push_url}"
     fi
     #docker rmi ${push_url}
+    sh git_push.sh
   done;
-  sh git_push.sh
+
   #[ -n "`docker images -q`" ] && docker rmi -f $(docker images -q)
   #docker images > images.tmp
   #_i=`cat images.tmp |  awk -F "[ ]+" 'NR=1{for(i=1;i<=NF;i++){if($i=="IMAGE"){print i}}}'`
