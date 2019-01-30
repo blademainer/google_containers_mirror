@@ -46,8 +46,6 @@ cat  gcr-list.tmp | while read repo; do
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
         time sh git_push.sh
-        index=$((index+1))
-        echo "index: $index"
         incr
         [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
       fi
