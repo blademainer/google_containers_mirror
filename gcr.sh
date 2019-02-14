@@ -18,6 +18,9 @@ rm -f gcr-list.tmp
 # gcloud container images list --repository gcr.io/google_containers
 
 cat owners | while read owner; do
+  if [ -z "$owner" ]; then
+    continue;
+  fi
   index=`gcloud container images list --repository gcr.io/$owner | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
   gcloud container images list --repository gcr.io/$owner | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
 done
