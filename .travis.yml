@@ -2,6 +2,7 @@ language: shell
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
+  - "google_containers_mirror_completed_list"
 services:
 - docker
 env:
