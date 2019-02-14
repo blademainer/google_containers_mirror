@@ -12,3 +12,4 @@ cloud-datalab
 kubeflow-images-public
 cloudsql-docker
 google-appengine
+google_containers
