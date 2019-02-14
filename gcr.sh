@@ -1,5 +1,6 @@
 #!/bin/bash
 maxCount=100
+touch counter.tmp
 incr(){
     echo "1" >> counter.tmp
 }
