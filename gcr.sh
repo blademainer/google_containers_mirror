@@ -16,8 +16,12 @@ clean(){
 ! which gcloud 2>/dev/null && echo "please install cloud first! see: https://cloud.google.com/sdk/downloads" && exit -1
 rm -f gcr-list.tmp
 # gcloud container images list --repository gcr.io/google_containers
-index=`gcloud container images list --repository gcr.io/google_containers | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
-gcloud container images list --repository gcr.io/google_containers | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
+
+cat owners | while read owner; do
+  index=`gcloud container images list --repository gcr.io/$owner | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
+  gcloud container images list --repository gcr.io/$owner | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
+done
+
 #index=`docker search gcr.io/google_containers/ | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
 #docker search gcr.io/google_containers/ | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
@@ -45,7 +49,7 @@ cat  gcr-list.tmp | while read repo; do
         echo "${push_url}" >> $stored_file_list
         echo "${image}" >> ${stored_image_list}
         echo "pushed: ${push_url} image: ${image}"
-        time sh git_push.sh
+        # time sh git_push.sh # use travis cache
         incr
         [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
       fi
@@ -65,5 +69,6 @@ cat  gcr-list.tmp | while read repo; do
   #done
   [ $(count) -gt $maxCount ] && echo "out reach max: $maxCount" && break
 done
-time sh git_push.sh
+
+#time sh git_push.sh
 
