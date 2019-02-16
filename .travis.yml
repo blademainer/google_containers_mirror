@@ -24,6 +24,7 @@ before_install:
   client-secret.json api_key.py
 install:
 - sh gcr.sh
-script: true
-post_install:
+script: 
 - sh git_push.sh
+#post_install:
+#- sh git_push.sh
