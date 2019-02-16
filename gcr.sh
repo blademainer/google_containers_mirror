@@ -57,7 +57,7 @@ cat owners | while read owner; do
             [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
           fi
         else
-          echo "ignored push: ${push_url}"
+          echo "ignored push: ${push_url}" >> ignored.tmp
         fi
         #docker rmi ${push_url}
 
@@ -74,5 +74,6 @@ cat owners | while read owner; do
     done;
 done
 
+echo "ignored: `cat ignored.tmp`"
 #time sh git_push.sh
 
