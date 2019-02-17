@@ -57,7 +57,7 @@ cat owners | while read owner; do
           ignored="true"
         fi
         
-        if [ "s$ignored" == "sfalse" ]; then
+        if [ "s$ignored" = "sfalse" ]; then
             docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
             echo "${push_url}" >> $stored_file_list
             echo "${image}" >> ${stored_image_list}
