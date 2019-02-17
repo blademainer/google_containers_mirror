@@ -46,8 +46,12 @@ cat owners | while read owner; do
       gcloud  container images list-tags ${repo_url}  | awk '{print $1" "$2}' | awk 'NR>1{print $0}' > ${repo}/tag.tmp
       cat ${repo}/tag.tmp | while read image tag; do
         push_url="${name}/${repo_name}:${tag}"
-        if [ -z "`cat ${stored_file_list} | grep ^${push_url}$`" ]; then
-          if [ -z "`cat ${stored_image_list} | grep ^${image}$`" ]; then
+        if [[ -z "`echo "$push_url | grep latest"`" ]] && [[ -n "`cat ${stored_file_list} | grep ^${push_url}$`" ]]; then
+          echo "ignored push: ${push_url}" >> ignored.tmp
+        else
+          if [ -n "`cat ${stored_image_list} | grep ^${image}$`" ]; then
+            echo "ignored push image: ${image}" >> ignored.tmp
+          else
             docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
             echo "${push_url}" >> $stored_file_list
             echo "${image}" >> ${stored_image_list}
@@ -56,8 +60,6 @@ cat owners | while read owner; do
             incr
             [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
           fi
-        else
-          echo "ignored push: ${push_url}" >> ignored.tmp
         fi
         #docker rmi ${push_url}
 
