@@ -46,7 +46,9 @@ cat owners | while read owner; do
       gcloud  container images list-tags ${repo_url}  | awk '{print $1" "$2}' | awk 'NR>1{print $0}' > ${repo}/tag.tmp
       cat ${repo}/tag.tmp | while read image tag; do
         push_url="${name}/${repo_name}:${tag}"
-        if [[ -z "`echo "$push_url | grep latest"`" ]] && [[ -n "`cat ${stored_file_list} | grep ^${push_url}$`" ]]; then
+        if [ -z "`echo "$push_url | grep latest"`" ]; then
+          echo "ignored push: ${push_url}" >> ignored.tmp
+        elif [ -n "`cat ${stored_file_list} | grep ^${push_url}$`" ]; then
           echo "ignored push: ${push_url}" >> ignored.tmp
         else
           if [ -n "`cat ${stored_image_list} | grep ^${image}$`" ]; then
