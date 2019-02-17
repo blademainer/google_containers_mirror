@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 maxCount=100
 touch counter.tmp
 incr(){
