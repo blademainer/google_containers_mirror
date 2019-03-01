@@ -1,6 +1,7 @@
 #!/bin/sh
-maxCount=500
+maxCount=200
 touch counter.tmp
+touch skip.tmp
 incr(){
     echo "1" >> counter.tmp
 }
