@@ -47,7 +47,9 @@ cat owners | while read owner; do
       repo_name=${repo##*/}
       repo_url="gcr.io/${owner}/${repo_name}"
       #gcloud alpha container images list-tags ${repo_url} | awk 'NR>2{print p}{p=$0}' | awk '{print $1" "$2}' > ${repo}/tag.tmp
-      gcloud  container images list-tags ${repo_url}  | awk '{print $1" "$2}' | awk 'NR>1{print $0}' > ${repo}/tag.tmp
+      gcloud  container images list-tags ${repo_url} > $repo_name.tmp
+      echo "${repo_url} contains tag size: `wc -l $repo_name.tmp`"
+      cat $repo_name.tmp | awk '{print $1" "$2}' | awk 'NR>1{print $0}' > ${repo}/tag.tmp
       cat ${repo}/tag.tmp | while read image tag; do
         ignored="false"
         push_url="${name}/${repo_name}:${tag}"
