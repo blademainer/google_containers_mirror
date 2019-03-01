@@ -42,6 +42,16 @@ cat owners | while read owner; do
     [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}
     [ ! -f "${stored_image_list}" ] && touch ${stored_image_list}
     cat  gcr-list.tmp | while read repo; do
+      skip_this="false"
+      cat ignore_images | while read ignore_image; do
+        if [ -n "`echo $repo | grep $ignore_image`" ]; then
+          skip_this="true"
+        fi
+      done
+      if [ "s$skip_this" = "strue" ]; then
+        echo "skip: $repo"
+        continue;
+      fi
       mkdir -p ${repo}
       #docker search ${repo} > ${repo}/list.tmp
       repo_name=${repo##*/}
