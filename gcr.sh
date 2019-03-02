@@ -38,7 +38,7 @@ cat owners | while read owner; do
       git clone --depth 1 "${stored_repo}"
     else 
       echo "completed_list git repo exists!"
-      git pull --git-dir=google_containers_mirror_completed_list/.git --work-tree=google_containers_mirror_completed_list --depth 1 "${stored_repo}"
+      git --git-dir=google_containers_mirror_completed_list/.git --work-tree=google_containers_mirror_completed_list pull --depth 1 "${stored_repo}"
     fi
     
     [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}
