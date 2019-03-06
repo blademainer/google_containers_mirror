@@ -69,14 +69,19 @@ cat owners | while read owner; do
         elif [ -n "`cat ${stored_file_list} | grep ^${repo_url}$`" ]; then
           echo "ignored push: ${push_url}" >> ignored.tmp
           ignored="true"
-        elif [ -n "`cat ${stored_image_list} | grep ^${image}$`" ]; then
+        fi
+        
+        if [ -n "`cat ${stored_image_list} | grep ^${image}$`" ]; then
           echo "ignored push image: ${image}" >> ignored.tmp
           ignored="true"
         fi
         
+        if [ -z "`cat ${stored_file_list} | grep ^${repo_url}$`" ]; then
+          echo "${repo_url}" >> $stored_file_list
+        fi
+        
         if [ "s$ignored" = "sfalse" ]; then
             docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
-            echo "${repo_url}" >> $stored_file_list
             echo "${image}" >> ${stored_image_list}
             echo "pushed: ${push_url} image: ${image}"
             # time sh git_push.sh # use travis cache
