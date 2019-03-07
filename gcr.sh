@@ -20,11 +20,12 @@ rm -f gcr-list.tmp
 # gcloud container images list --repository gcr.io/google_containers
 
 cat owners | while read owner; do
+    echo "processing owner: $owner"
     if [ -z "$owner" ]; then
       continue;
     fi
     index=`gcloud container images list --repository gcr.io/$owner | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
-    gcloud container images list --repository gcr.io/$owner | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
+    gcloud container images list --repository gcr.io/$owner | awk 'NR>1{print $0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
 
     #index=`docker search gcr.io/google_containers/ | awk '{for(i=1;i<=NF;i++){if("NAME"==$i){print i}}}'`
     #docker search gcr.io/google_containers/ | awk 'NR>2{print p}{p=$0}' | awk -v i=${index} '{print $i}' >> gcr-list.tmp
@@ -62,11 +63,12 @@ cat owners | while read owner; do
       echo "${repo_url} contains tag size: `wc -l $repo_name.tmp`"
       cat $repo_name.tmp | awk '{print $1" "$2}' | awk 'NR>1{print $0}' > ${repo}/tag.tmp
       cat ${repo}/tag.tmp | while read image tag; do
+        repo_image="${repo_url}:${tag}"
         ignored="false"
         push_url="${name}/${repo_name}:${tag}"
         if [ -n "`echo "$push_url | grep latest"`" ]; then
           ignored="false"
-        elif [ -n "`cat ${stored_file_list} | grep ^${repo_url}:${tag}$`" ]; then
+        elif [ -n "`cat ${stored_file_list} | grep ^${repo_image}$`" ]; then
           echo "ignored push: ${push_url}" >> ignored.tmp
           ignored="true"
         fi
@@ -76,10 +78,12 @@ cat owners | while read owner; do
           ignored="true"
         fi
         
-        if [ -z "`cat ${stored_file_list} | grep ^${repo_url}$`" ]; then
-          echo "${repo_url}:${tag}" >> $stored_file_list
+        if [ -z "`cat ${stored_file_list} | grep ^${repo_image}$`" ]; then
+          echo "${repo_image}" >> $stored_file_list
         fi
         
+        echo "$repo_image is ignore: $ignored" 
+          
         if [ "s$ignored" = "sfalse" ]; then
             docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
             echo "${image}" >> ${stored_image_list}
