@@ -66,7 +66,7 @@ cat owners | while read owner; do
         push_url="${name}/${repo_name}:${tag}"
         if [ -n "`echo "$push_url | grep latest"`" ]; then
           ignored="false"
-        elif [ -n "`cat ${stored_file_list} | grep ^${repo_url}$`" ]; then
+        elif [ -n "`cat ${stored_file_list} | grep ^${repo_url}:${tag}$`" ]; then
           echo "ignored push: ${push_url}" >> ignored.tmp
           ignored="true"
         fi
@@ -77,7 +77,7 @@ cat owners | while read owner; do
         fi
         
         if [ -z "`cat ${stored_file_list} | grep ^${repo_url}$`" ]; then
-          echo "${repo_url}" >> $stored_file_list
+          echo "${repo_url}:${tag}" >> $stored_file_list
         fi
         
         if [ "s$ignored" = "sfalse" ]; then
