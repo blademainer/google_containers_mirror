@@ -111,6 +111,9 @@ cat owners | while read owner; do
       #  docker rmi -f $image_id
       #done
       [ $(count) -gt $maxCount ] && echo "out reach max: $maxCount" && break
+      # timeout ?
+      now_timestamp=`date +%s`
+      [ $((now_timestamp-start_timestamp)) -gt $time_out_seconds ] && echo "timeout!!" && break 2
     done;
 done
 
