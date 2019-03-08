@@ -82,7 +82,7 @@ cat owners | while read owner; do
           echo "${repo_image}" >> $stored_file_list
         fi
         
-        echo "$repo_image is ignore: $ignored" 
+        # echo "$repo_image is ignore: $ignored" 
           
         if [ "s$ignored" = "sfalse" ]; then
             docker pull ${repo_url}:${tag} && docker tag ${repo_url}:${tag} ${name}/${repo_name}:${tag} && docker push ${push_url};
