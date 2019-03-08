@@ -1,4 +1,8 @@
 #!/bin/sh
+# 40 min
+time_out_seconds=2400
+start_timestamp=`date +%s`
+
 maxCount=200
 touch counter.tmp
 touch skip.tmp
@@ -91,6 +95,9 @@ cat owners | while read owner; do
             # time sh git_push.sh # use travis cache
             incr
             [ $(count) -gt $maxCount ] && echo "inner reach max: $maxCount" && break 2
+            # timeout ?
+            now_timestamp=`date +%s`
+            [ $((now_timestamp-start_timestamp)) -gt $time_out_seconds ] && echo "timeout!!" && beak 2
         fi
         #docker rmi ${push_url}
 
