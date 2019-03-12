@@ -3,7 +3,7 @@
 time_out_seconds=2400
 start_timestamp=`date +%s`
 
-maxCount=200
+maxCount=400
 touch counter.tmp
 touch skip.tmp
 incr(){
