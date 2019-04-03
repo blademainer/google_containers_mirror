@@ -42,6 +42,9 @@ cat owners | while read owner; do
     
     if [ ! -d "google_containers_mirror_completed_list" ]; then
       git clone --depth 1 "${stored_repo}"
+    elif [ ! -d "google_containers_mirror_completed_list/.git" ]; then
+      echo "not found git dir! so delete these dir!"
+      rm -fr google_containers_mirror_completed_list && git clone --depth 1 "${stored_repo}"
     else 
       echo "completed_list git repo exists! `ls -l google_containers_mirror_completed_list`"
       git --git-dir=google_containers_mirror_completed_list/.git --work-tree=google_containers_mirror_completed_list pull --depth 1 "${stored_repo}"
