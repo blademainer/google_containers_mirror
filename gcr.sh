@@ -40,7 +40,7 @@ cat owners | while read owner; do
     stored_image_list="google_containers_mirror_completed_list/gcr-complete-images"
     stored_repo="https://github.com/blademainer/google_containers_mirror_completed_list.git"
     
-    if [ ! -f "google_containers_mirror_completed_list" ]; then
+    if [ ! -d "google_containers_mirror_completed_list" ]; then
       git clone --depth 1 "${stored_repo}"
     else 
       echo "completed_list git repo exists! `ls -l google_containers_mirror_completed_list`"
