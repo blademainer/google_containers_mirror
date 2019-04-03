@@ -19,7 +19,7 @@ upload_files() {
 #  git push --quiet --set-upstream tasks master
 #  git pull ${REMOTE_REF} master && 
 #  git push ${REMOTE_REF} master
-  git pull "$REPO" master && git push "$REPO" master --allow-unrelated-histories
+  git pull "$REPO" master && git push "$REPO" master
 }
 
 cd google_containers_mirror_completed_list
