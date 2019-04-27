@@ -1,7 +1,6 @@
 kubernetes-helm
 k8s-minikube
 google-samples
-tf-on-k8s-dogfood
 spinnaker-marketplace
 google-containers
 distroless
