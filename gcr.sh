@@ -53,16 +53,16 @@ cat owners | while read owner; do
     [ ! -f "${stored_file_list}" ] && touch ${stored_file_list}
     [ ! -f "${stored_image_list}" ] && touch ${stored_image_list}
     cat  gcr-list.tmp | while read repo; do
-      cat ignore_images | while read ignore_image; do
+      while read ignore_image; do
         if [ -n "`echo $repo | grep $ignore_image`" ]; then
           echo "$repo" >> skip.tmp
         fi
-      done
-      cat ignore_keywords | while read ignore_image; do
+      done < ignore_images
+      while read ignore_image; do
         if [ -n "`echo $repo | grep $ignore_image`" ]; then
           echo "$repo" >> skip.tmp
         fi
-      done
+      done < ignore_keywords
       if [ -n "`cat skip.tmp | grep $repo`" ]; then
         echo "skip: $repo"
         continue;
