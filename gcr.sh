@@ -62,8 +62,12 @@ cat owners | while read owner; do
       while read ignore_image; do
         if [ -n "`echo $repo | grep $ignore_image`" ]; then
           echo "$repo" >> skip.tmp
+          echo "ignore repo $repo"
           continue;
+        else 
+          echo "process: $repo"
         fi
+        
       done < ignore_keywords
       if [ -n "`cat skip.tmp | grep $repo`" ]; then
         echo "skip: $repo"
