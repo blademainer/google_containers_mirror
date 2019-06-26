@@ -85,6 +85,14 @@ cat owners | while read owner; do
         repo_image="${repo_url}:${tag}"
         ignored="false"
         push_url="${name}/${repo_name}:${tag}"
+        
+        while read keyword; do
+          if [ -n "`echo $push_url | grep $keyword`" ]; then
+            echo "ignore push_url: $push_url"
+            ignored="true"
+          fi
+        done < ignore_keywords
+        
         if [ -n "`echo "$push_url | grep latest"`" ]; then
           ignored="false"
         elif [ -n "`cat ${stored_file_list} | grep ^${repo_image}$`" ]; then
