@@ -99,12 +99,13 @@ cat owners | while read owner; do
           if [ -n "`echo $push_url | grep $keyword`" ]; then
             #echo "ignore push_url: $push_url"
             ignored="true"
-            echo "true" > ${push_url}.ignored
+            echo "true" > ignored
           fi
         done < ignore_keywords
         
-        if [ -f "${push_url}.ignored" ]; then
+        if [ -f "ignored" ]; then
           ignored="true"
+          rm -f ignored
         fi
         
         if [ -n "`cat ${stored_image_list} | grep ^${image}$`" ]; then
