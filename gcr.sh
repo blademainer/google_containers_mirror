@@ -88,7 +88,7 @@ cat owners | while read owner; do
         
         while read keyword; do
           if [ -n "`echo $push_url | grep $keyword`" ]; then
-            echo "ignore push_url: $push_url"
+            #echo "ignore push_url: $push_url"
             ignored="true"
           fi
         done < ignore_keywords
